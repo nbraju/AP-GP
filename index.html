@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ప్రచార సహాయకుడు · GP Campaign Helper</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f4f3;--sf:#fff;--tx:#1b2238;--mu:#5d6680;--ink:#2b2f7e;--ink-t:#fff;--ln:#d9dee6;--A:#1f8a4c;--B:#c98a00;--C:#2a6fc9;--D:#c43b3b;--ok:#e3f3ea}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10131f;--sf:#1b2033;--tx:#eef0f8;--mu:#9aa3bd;--ink:#8d92ff;--ink-t:#10131f;--ln:#2f3652;--A:#4cc98a;--B:#e9b73a;--C:#6aa5f0;--D:#f07878;--ok:#17352a}}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'Noto Sans Telugu',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:18px;line-height:1.45}
+#app{max-width:520px;margin:0 auto;padding:12px 14px 96px}
+h1{font-size:22px;font-weight:800}h2{font-size:20px;font-weight:800;margin:6px 0 10px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;margin-bottom:12px}
+.mu{color:var(--mu);font-size:15px}
+.btn{display:block;width:100%;min-height:56px;border:0;border-radius:14px;background:var(--ink);color:var(--ink-t);font:inherit;font-weight:800;font-size:19px;padding:12px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.btn.sm{min-height:48px;font-size:17px;width:auto;padding:8px 16px}
+label{display:block;font-weight:600;margin:14px 0 6px}
+input,select,textarea{width:100%;min-height:54px;font:inherit;font-size:19px;color:var(--tx);background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:10px 12px}
+input:focus,select:focus,textarea:focus,.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
+.big{font-size:44px;font-weight:800;line-height:1.05;color:var(--ink)}
+.bar{height:16px;background:var(--ln);border-radius:9px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--A);border-radius:9px}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.cat{min-height:50px;border-radius:12px;border:2px solid var(--ln);background:var(--sf);color:var(--tx);font:inherit;font-weight:800;font-size:20px}
+.cat.on{color:#fff;border-color:transparent}
+.cat.on.A{background:var(--A)}.cat.on.B{background:var(--B)}.cat.on.C{background:var(--C)}.cat.on.D{background:var(--D)}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px}
+.chip{flex:none;min-height:46px;padding:6px 16px;border-radius:23px;border:2px solid var(--ln);background:var(--sf);color:var(--tx);font:inherit;font-weight:600}
+.chip.on{background:var(--ink);color:var(--ink-t);border-color:var(--ink)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--sf);border-top:1px solid var(--ln);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+.tab{flex:1;min-height:64px;border:0;background:none;color:var(--mu);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.tab b{display:block;font-size:26px;line-height:1.1}.tab.on{color:var(--ink)}
+.chk{display:flex;gap:12px;align-items:center;min-height:56px;border-bottom:1px solid var(--ln)}
+.chk input{width:30px;min-height:30px;flex:none}
+.done{background:var(--ok)}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.x{border:0;background:none;color:var(--D);font:inherit;font-size:15px;min-height:44px;padding:0 6px}
+a.call{color:var(--ink);font-weight:800;text-decoration:none}
+#md{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:flex-end}#md.on{display:flex}
+.sheet{background:var(--sf);width:100%;max-width:520px;margin:0 auto;border-radius:22px 22px 0 0;padding:16px;max-height:92%;overflow:auto}
+#hb{position:fixed;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;border:2px solid var(--ink);background:var(--sf);box-shadow:0 2px 8px #0004;font-size:24px;z-index:6}#hb.on{background:var(--ink)}
+canvas#cv{width:100%;border-radius:16px;box-shadow:0 4px 18px #0003;margin-top:10px;background:#fff}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mg .btn{min-height:110px;font-size:20px}
+@page{size:A5;margin:0}
+@media print{body *{visibility:hidden}#cv{visibility:visible;position:fixed;left:0;top:0;width:148mm;height:210mm;border-radius:0;box-shadow:none;margin:0}}
+</style></head><body><div id="app"></div><nav id="nav"></nav><div id="md"></div><button id="hb" onclick="helpT()">❓</button>
+<script>
+var K='gpcamp1',S,view='home',wardF=0,pollF='todo',CF='',RF='fu',RT=[],EDK,CVI={},tm;
+
+var T={
+ app:['ప్రచార సహాయకుడు','Campaign Helper'],setup:['మీ వివరాలు (ఒక్కసారి)','Your details (one time)'],
+ gp:['గ్రామ పంచాయతీ పేరు','Gram Panchayat name'],pop:['జనాభా','Population'],vot:['మొత్తం ఓటర్లు','Total voters'],wd:['వార్డుల సంఖ్య','Number of wards'],
+ res:['సర్పంచ్ స్థానం రిజర్వేషన్','Sarpanch seat reservation'],opp:['ప్రత్యర్థులు (పేర్లు)','Likely opponents (names)'],bg:['మీ నేపథ్యం','Your background'],
+ start:['ప్రారంభించండి','Start'],home:['హోమ్','Home'],hh:['ఇళ్లు','Homes'],poll:['పోలింగ్','Poll day'],money:['ఖర్చు','Money'],team:['టీమ్','Team'],
+ pd:['పోలింగ్ తేదీ','Poll date'],days:['రోజులు మిగిలాయి','days left'],tgt:['గెలవడానికి కావలసిన ఓట్లు','Votes needed to win'],
+ sure:['మీ ఓట్లు (A)','Your sure votes (A)'],lean:['వచ్చే అవకాశం (B)','Likely (B)'],und:['తేలనివి (C)','Undecided (C)'],opn:['ప్రత్యర్థి (D)','Opponent (D)'],
+ wards:['వార్డుల వారీ','Ward by ward'],tasks:['ఈ రోజు చేయాల్సినవి','To-do list'],add:['ఇల్లు చేర్చండి','Add home'],headn:['ఇంటి పెద్ద పేరు','Head of home'],
+ nv:['ఓటర్ల సంఖ్య','Voters in home'],ward:['వార్డు','Ward'],all:['అన్నీ','All'],visit:['సందర్శన','Visit'],save:['సేవ్ చేయండి','Save'],del:['తొలగించు','Delete'],
+ voted:['ఓటు వేశారు','Voted'],todo:['ఇంకా వేయలేదు','Not yet'],did:['వేశారు','Done'],prog:['ఓటు వేసిన మద్దతుదారులు','Supporters who voted'],
+ lim:['ఖర్చు పరిమితి (₹)','Spending limit (₹)'],amt:['మొత్తం (₹)','Amount (₹)'],note:['దేనికి?','For what?'],spent:['ఖర్చయింది','Spent'],left:['మిగిలింది','Left'],
+ nm:['పేరు','Name'],ph:['ఫోన్','Phone'],role:['పని','Job'],edit:['వివరాలు మార్చండి','Edit details'],lang:['English','తెలుగు'],none:['ఇంకా ఏమీ లేదు.','Nothing yet.'],
+ warn:['⚠ పరిమితి దాటబోతోంది','⚠ Close to limit'],hint9:['ఉదయం 9 కల్లా 30% ఓటింగ్','By 9 am: 30% voted'],hint11:['11 కల్లా 60%','By 11: 60%'],hint12:['12 తర్వాత ఫోన్, వాహనం','After 12: call and send vehicles'],
+ conf:['నిజంగా తొలగించాలా?','Really delete?'],rst:['మొత్తం డేటా తొలగించు','Erase all data'],note1:['అంచనా: 80% పోలింగ్.','Estimate assumes 80% turnout.'],
+ more:['మరిన్ని','More'],rep:['నివేదికలు','Reports'],fu:['కలవాల్సినవి','Follow-up'],needv:['ఇళ్లు ఇంకా కలవాలి','homes need visits'],
+ edit2:['మార్చండి','Edit'],sendrep:['నివేదికను పంపండి','Send report'],gap:['ఓట్ల తేడా','Vote gap'],
+ sheet:['గూగుల్ షీట్','Google Sheet'],url:['షీట్ లింక్ (Script URL)','Sheet link (Script URL)'],key:['షీట్ రహస్య కోడ్','Sheet secret code'],
+ conn:['కలపండి','Connect'],up:['పంపండి','Upload'],down:['తెచ్చుకోండి','Restore'],pend:['పంపాల్సిన మార్పులు ఉన్నాయి','Changes waiting to upload'],
+ syok:['షీట్‌లో సేవ్ అయింది','Saved to sheet'],syerr:['⚠ సర్వర్ సమస్య','⚠ Server issue'],
+ loading:['లోడ్ అవుతోంది…','Loading…']
+};
+var RES=[['జనరల్','General'],['జనరల్ మహిళ','General Woman'],['బీసీ','BC'],['బీసీ మహిళ','BC Woman'],['ఎస్సీ','SC'],['ఎస్సీ మహిళ','SC Woman'],['ఎస్టీ','ST'],['ఎస్టీ మహిళ','ST Woman']];
+var TASKS=[['నామినేషన్ పత్రాలు సరిచూడండి','Check nomination papers'],['ఓటర్ల జాబితా తెచ్చుకోండి','Get voter list'],['వార్డు కెప్టెన్లను నియమించండి','Appoint ward captains'],['అన్ని ఇళ్లకు A/B/C/D వేయండి','Mark every home A/B/C/D'],['3 వాగ్దానాలు నిర్ణయించండి','Fix 3 promises'],['మహిళా సంఘాల సమావేశం','Meet women/SHG groups'],['ప్రతి ఇంటికి 3 సార్లు వెళ్లండి','Visit each home 3 times'],['వలస ఓటర్లకు ఫోన్ చేయండి','Call migrant voters'],['ఓటర్ స్లిప్పులు పంచండి','Give voter slips'],['బూత్ ఏజెంట్లకు శిక్షణ','Train booth agents'],['ఖర్చు రిజిస్టర్ రోజూ రాయండి','Write expenses daily']];
+
+function t(k){return (T[k]||[k,k])[S.lang==='en'?1:0]}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function g(id){return document.getElementById(id).value}
+function nid(){return Date.now()+Math.floor(Math.random()*999)}
+function go(v){view=v;render();window.scrollTo(0,0)}
+function setLang(){S.lang=S.lang==='en'?'te':'en';save();render()}
+
+function load(){
+  try{S=JSON.parse(localStorage.getItem(K))}catch(e){S=null}
+  if(!S)S={};
+  S.lang=S.lang||'te';S.p=S.p||null;S.url=S.url||'';S.key=S.key||'';S.help=S.help||0;
+  S.hh=S.hh||[];S.team=S.team||[];S.exp=S.exp||[];S.chk=S.chk||{};S.date=S.date||'';S.limit=S.limit||0;
+  S.dirty=S.dirty||0;S.loading=0;S.error='';
+}
+function save(){
+  var toSave={lang:S.lang,p:S.p,url:S.url,key:S.key,help:S.help};
+  try{localStorage.setItem(K,JSON.stringify(toSave))}catch(e){}
+}
+function markDirty(){S.dirty=1;clearTimeout(tm);if(S.url&&S.key)tm=setTimeout(push,1500)}
+function fetchData(){
+  if(!S.url||!S.key){S.loading=0;render();return}
+  S.loading=1;S.error='';render();
+  fetch(S.url+'?key='+encodeURIComponent(S.key))
+   .then(function(r){return r.json()})
+   .then(function(d){
+     if(d.err){S.error=d.err}
+     else{
+       if(d.p)S.p=d.p;
+       S.hh=d.hh||[];S.team=d.team||[];S.exp=d.exp||[];S.chk=d.chk||{};
+       S.date=d.date||'';S.limit=d.limit||0;
+     }
+     S.loading=0;S.dirty=0;render();
+   })
+   .catch(function(){S.error='⚠ connection';S.loading=0;render()});
+}
+function push(){
+  if(!S.url||!S.key)return;
+  var payload={key:S.key,p:S.p,hh:S.hh,team:S.team,exp:S.exp,chk:S.chk,date:S.date,limit:S.limit,
+    gd:Object.keys(S.chk).filter(function(k){return S.chk[k]}).length};
+  fetch(S.url,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)})
+   .then(function(r){return r.json()})
+   .then(function(j){
+     if(j.ok){S.dirty=0;S.error='✔ '+t('syok')+' '+new Date().toLocaleTimeString('en-IN')}
+     else S.error=j.err||'err';
+     render();
+   })
+   .catch(function(){S.error='⚠ '+t('syerr');render()});
+}
+function sumV(c,w){return S.hh.filter(function(h){return h.c===c&&(!w||h.w===w)}).reduce(function(a,h){return a+h.n},0)}
+function need(){if(!S.p)return 0;var o=(S.p.opp||[]).filter(function(x){return x&&x.trim()}).length,pl=Math.round(S.p.vot*.8);return o<=1?Math.floor(pl/2)+1:Math.round(pl*.4)}
+function fh(id){return S.hh.filter(function(x){return x.id===id})[0]}
+
+function f(id,v,ty){return'<label>'+t(id)+'</label><input id="'+id+'" type="'+(ty||'text')+'" '+(ty==='number'?'inputmode="numeric" ':'')+'value="'+esc(v)+'">'}
+function setup(){
+  var p=S.p||{},o=p.opp||['','',''];
+  var h='<h1>🗳 '+t('app')+'</h1><div class="card"><h2>'+t('setup')+'</h2>'+
+    f('gp',p.gp)+f('pop',p.pop,'number')+f('vot',p.vot,'number')+f('wd',p.wd,'number')+
+    '<label>'+t('res')+'</label><select id="res">'+RES.map(function(r,i){return'<option value="'+i+'"'+(p.res==i?' selected':'')+'>'+r[S.lang==='en'?1:0]+'</option>'}).join('')+'</select>'+
+    '<label>'+t('opp')+'</label><input id="o0" value="'+esc(o[0])+'"><input id="o1" style="margin-top:8px" value="'+esc(o[1])+'"><input id="o2" style="margin-top:8px" value="'+esc(o[2])+'">'+
+    '<label>'+t('bg')+'</label><textarea id="bg" rows="3">'+esc(p.bg)+'</textarea></div>'+
+    '<button class="btn" onclick="saveSetup()">'+t('start')+'</button>'+
+    '<button class="btn alt" style="margin-top:10px" onclick="setLang()">'+t('lang')+'</button>'+
+    '<div class="card" style="margin-top:12px"><label style="margin-top:0">'+t('url')+'</label><input id="su" value="'+esc(S.url)+'" placeholder="https://script.google.com/..."><label>'+t('key')+'</label><input id="sk" value="'+esc(S.key)+'"></div>';
+  return h;
+}
+function saveSetup(){
+  if(!g('gp').trim()||!(+g('vot')>0)||!(+g('wd')>0)){alert('Fill GP name, voters, wards');return}
+  S.p={gp:g('gp').trim(),pop:+g('pop')||0,vot:+g('vot'),wd:Math.min(+g('wd'),40),res:+g('res'),opp:[g('o0'),g('o1'),g('o2')],bg:g('bg')};
+  S.url=g('su').trim();S.key=g('sk').trim();
+  save();
+  go('home');
+  if(S.url&&S.key)push();
+}
+
+function home(){
+  var p=S.p;
+  var nd=need();
+  var a=sumV('A'),pc=Math.min(100,Math.round(a/nd*100)),dl='';
+  if(S.date){var d=Math.ceil((new Date(S.date)-new Date(new Date().toDateString()))/864e5);dl='<div class="big">'+(d>=0?d:0)+'</div><div class="mu">'+t('days')+'</div>'}
+  var h='<div class="top"><h1>'+esc(p.gp)+'</h1><button class="x" style="color:var(--ink)" onclick="setLang()">'+t('lang')+'</button></div>'+
+    '<div class="mu" style="margin-bottom:10px">'+RES[p.res][S.lang==='en'?1:0]+' · '+p.vot+' · '+p.wd+' '+t('ward')+'</div>'+
+    '<div class="card"><label style="margin-top:0">'+t('pd')+'</label><input type="date" value="'+esc(S.date)+'" onchange="S.date=this.value;markDirty();render()">'+dl+'</div>'+
+    '<div class="card"><div class="mu">'+t('tgt')+'</div><div class="big">'+nd+'</div><div class="bar"><i style="width:'+pc+'%"></i></div>'+
+    '<div><span class="dot" style="background:var(--A)"></span>'+t('sure')+': <b>'+a+'</b></div>'+
+    '<div><span class="dot" style="background:var(--B)"></span>'+t('lean')+': <b>'+sumV('B')+'</b></div>'+
+    '<div><span class="dot" style="background:var(--C)"></span>'+t('und')+': <b>'+sumV('C')+'</b></div>'+
+    '<div><span class="dot" style="background:var(--D)"></span>'+t('opn')+': <b>'+sumV('D')+'</b></div></div>';
+  h+='<div class="card"><h2>'+t('wards')+'</h2>';
+  for(var w=1;w<=p.wd;w++)h+='<div class="row" style="min-height:44px;border-bottom:1px solid var(--ln)"><b style="flex:none;width:34px">'+w+'</b><span style="color:var(--A);font-weight:800;text-align:right">A '+sumV('A',w)+'</span></div>';
+  h+='</div><div class="card"><h2>'+t('tasks')+'</h2>'+TASKS.map(function(k,i){var on=S.chk[i];return'<label class="chk '+(on?'done':'')+'" style="margin:0"><input type="checkbox" '+(on?'checked':'')+' onchange="S.chk['+i+']=this.checked;markDirty();render()"><span>'+k[S.lang==='en'?1:0]+'</span></label>'}).join('')+'</div>'+
+    '<button class="btn alt" onclick="view=\'setup\';render()">'+t('edit')+'</button>';
+  return h;
+}
+
+function wardChips(sel,fn){var h='<div class="chips"><button class="chip '+(sel==0?'on':'')+'" onclick="'+fn+'(0)">'+t('all')+'</button>';
+  for(var w=1;w<=S.p.wd;w++)h+='<button class="chip '+(sel==w?'on':'')+'" onclick="'+fn+'('+w+')">'+w+'</button>';return h+'</div>'}
+function setW(w){wardF=w;render()}
+function wardSel(id){return'<select id="'+id+'">'+Array.apply(null,Array(S.p.wd)).map(function(_,i){return'<option>'+(i+1)+'</option>'}).join('')+'</select>'}
+function homes(){
+  var h='<h2>'+t('hh')+'</h2><div class="card"><label style="margin-top:0">'+t('headn')+'</label><input id="hn"><div class="row"><div><label>'+t('ward')+'</label>'+wardSel('hw')+'</div><div><label>'+t('nv')+'</label><input id="hv" type="number" inputmode="numeric" value="3"></div></div><label>'+t('ph')+'</label><input id="hp" type="tel" inputmode="tel"><label>'+t('note')+'</label><input id="hq"><button class="btn" style="margin-top:14px" onclick="addH()">＋ '+t('add')+'</button></div>'+
+    '<input placeholder="🔍 '+t('nm')+'" value="'+esc(S.q||'')+'" oninput="S.q=this.value;sr()">'+
+    wardChips(wardF,'setW')+catChips()+'<div id="hl">'+hlist()+'</div>';
+  return h;
+}
+function catChips(){return'<div class="chips">'+['','A','B','C','D'].map(function(c){return'<button class="chip '+(CF===c?'on':'')+'" onclick="setCF(\''+c+'\')">'+(c||t('all'))+'</button>'}).join('')+'</div>'}
+function setCF(c){CF=c;render()}
+function sr(){document.getElementById('hl').innerHTML=hlist()}
+function hlist(){
+  var q=(S.q||'').toLowerCase(),L=S.hh.filter(function(x){return(!wardF||x.w==wardF)&&(!CF||x.c===CF)&&(x.name||'').toLowerCase().indexOf(q)>-1}),h='<p class="mu">'+L.length+' / '+S.hh.length+'</p>';
+  if(!L.length)h+='<p class="mu">'+t('none')+'</p>';
+  L.slice().reverse().forEach(function(x){
+    h+='<div class="card"><div class="top" style="margin:0"><div><b>'+esc(x.name)+'</b><div class="mu">W'+x.w+' · '+x.n+' · V:'+x.v+(x.note?'<br>📝 '+esc(x.note):'')+'</div></div><div style="white-space:nowrap">'+ct(x)+'<button class="x" onclick="delH('+x.id+')">🗑</button></div></div><div class="cats">'+
+     ['A','B','C','D'].map(function(c){return'<button class="cat '+c+(x.c===c?' on':'')+'" onclick="setC('+x.id+',\''+c+'\')">'+c+'</button>'}).join('')+'</div><button class="btn alt sm" style="margin-top:10px;width:100%" onclick="visit('+x.id+')">＋ '+t('visit')+'</button></div>';
+  });
+  return h;
+}
+function ct(x){return x.p?'<a class="call" style="font-size:26px;padding:0 6px" href="tel:'+esc(x.p)+'">📞</a>':''}
+function addH(){var n=g('hn').trim();if(!n)return;
+  S.hh.push({id:nid(),name:n,w:+g('hw'),n:+g('hv')||1,p:g('hp').trim(),note:g('hq').trim(),c:'C',v:0,voted:false});
+  markDirty();render()}
+function setC(id,c){fh(id).c=c;markDirty();render()}
+function visit(id){fh(id).v++;markDirty();render()}
+function delH(id){if(confirm(t('conf'))){S.hh=S.hh.filter(function(x){return x.id!==id});markDirty();render()}}
+
+function pollv(){
+  var sup=S.hh.filter(function(x){return x.c==='A'||x.c==='B'}),tot=sup.reduce(function(a,x){return a+x.n},0),dn=sup.filter(function(x){return x.voted}).reduce(function(a,x){return a+x.n},0),pc=tot?Math.round(dn/tot*100):0;
+  var h='<h2>'+t('poll')+'</h2><div class="card"><div class="mu">'+t('prog')+'</div><div class="big">'+dn+' / '+tot+'</div><div class="bar"><i style="width:'+pc+'%"></i></div><b>'+pc+'%</b><div class="mu" style="margin-top:8px">'+t('hint9')+'<br>'+t('hint11')+'<br>'+t('hint12')+'</div></div>'+
+    '<div class="chips"><button class="chip '+(pollF==='todo'?'on':'')+'" onclick="pollF=\'todo\';render()">'+t('todo')+'</button><button class="chip '+(pollF==='done'?'on':'')+'" onclick="pollF=\'done\';render()">'+t('did')+'</button></div>'+wardChips(wardF,'setW');
+  var L=sup.filter(function(x){return(pollF==='done')===!!x.voted&&(!wardF||x.w==wardF)}).sort(function(a,b){return a.c<b.c?-1:1});
+  if(!L.length)h+='<p class="mu">'+t('none')+'</p>';
+  L.forEach(function(x){h+='<div class="card '+(x.voted?'done':'')+'"><div class="top" style="margin:0"><div><span class="dot" style="background:var(--'+x.c+')"></span><b>'+esc(x.name)+'</b><div class="mu">W'+x.w+' · '+x.n+'</div></div></div><button class="btn '+(x.voted?'alt':'')+'" style="margin-top:8px" onclick="tv('+x.id+')">'+(x.voted?'↩ '+t('todo'):'✔ '+t('voted'))+'</button></div>'});
+  return h;
+}
+function tv(id){var x=fh(id);x.voted=!x.voted;markDirty();render()}
+
+function moneyv(){
+  var sp=S.exp.reduce(function(a,x){return a+x.a},0),pc=S.limit?Math.min(100,Math.round(sp/S.limit*100)):0;
+  var h='<h2>'+t('money')+'</h2><div class="card"><label style="margin-top:0">'+t('lim')+'</label><input type="number" inputmode="numeric" value="'+(S.limit||'')+'" onchange="S.limit=+this.value||0;markDirty();render()">'+
+    '<div class="big" style="margin-top:12px">₹'+sp+'</div><div class="mu">'+t('spent')+(S.limit?' · '+t('left')+': ₹'+(S.limit-sp):'')+'</div><div class="bar"><i style="width:'+pc+'%;background:'+(pc>90?'var(--D)':'var(--A)')+'"></i></div>'+(pc>90?'<b style="color:var(--D)">'+t('warn')+'</b>':'')+'</div>'+
+    '<div class="card"><label style="margin-top:0">'+t('amt')+'</label><input id="ea" type="number" inputmode="numeric"><label>'+t('note')+'</label><input id="en"><button class="btn" style="margin-top:14px" onclick="addE()">＋ '+t('save')+'</button></div>';
+  if(!S.exp.length)h+='<p class="mu">'+t('none')+'</p>';
+  S.exp.slice().reverse().forEach(function(x){h+='<div class="card"><div class="top" style="margin:0"><div><b>₹'+x.a+'</b> '+esc(x.n)+'<div class="mu">'+x.d+'</div></div><button class="x" onclick="delE('+x.id+')">'+t('del')+'</button></div></div>'});
+  return h;
+}
+function addE(){var a=+g('ea');if(!(a>0))return;S.exp.push({id:nid(),a:a,n:g('en'),d:new Date().toLocaleDateString('en-IN')});markDirty();render()}
+function delE(id){if(confirm(t('conf'))){S.exp=S.exp.filter(function(x){return x.id!==id});markDirty();render()}}
+
+function teamv(){
+  var h='<h2>'+t('team')+'</h2><div class="card"><label style="margin-top:0">'+t('nm')+'</label><input id="tn"><label>'+t('ph')+'</label><input id="tp" type="tel" inputmode="tel"><div class="row"><div><label>'+t('ward')+'</label><select id="tw">'+Array.apply(null,Array(S.p.wd)).map(function(_,i){return'<option>'+(i+1)+'</option>'}).join('')+'</select></div><div><label>'+t('role')+'</label><input id="tr"></div></div><button class="btn" style="margin-top:14px" onclick="addT()">＋ '+t('save')+'</button></div>';
+  if(!S.team.length)h+='<p class="mu">'+t('none')+'</p>';
+  S.team.forEach(function(x){h+='<div class="card"><div class="top" style="margin:0"><div><b>'+esc(x.n)+'</b><div class="mu">W'+x.w+' · '+esc(x.r)+'</div>'+(x.p?'<a class="call" href="tel:'+esc(x.p)+'">📞 '+esc(x.p)+'</a>':'')+'</div><button class="x" onclick="delT('+x.id+')">'+t('del')+'</button></div></div>'});
+  return h+syncCard()+'<button class="btn alt" style="margin-top:12px" onclick="if(confirm(t(\'conf\'))){try{localStorage.removeItem(K)}catch(e){}S=null;load();view=\'setup\';render()}">'+t('rst')+'</button>';
+}
+function addT(){var n=g('tn').trim();if(!n)return;S.team.push({id:nid(),n:n,p:g('tp').trim(),w:+g('tw'),r:g('tr')});markDirty();render()}
+function delT(id){if(confirm(t('conf'))){S.team=S.team.filter(function(x){return x.id!==id});markDirty();render()}}
+
+function syncCard(){
+  return'<div class="card"><h2>📊 '+t('sheet')+'</h2><label style="margin-top:0">'+t('url')+'</label><input id="su" value="'+esc(S.url)+'" placeholder="https://script.google.com/..."><label>'+t('key')+'</label><input id="sk" value="'+esc(S.key)+'"><button class="btn" style="margin-top:10px" onclick="S.url=g(\'su\').trim();S.key=g(\'sk\').trim();save();fetchData()">'+t('conn')+'</button><div class="row" style="margin-top:10px"><button class="btn alt sm" onclick="push()">⬆ '+t('up')+'</button><button class="btn alt sm" onclick="fetchData()">⬇ '+t('down')+'</button></div><p class="mu" style="margin-top:8px">'+(S.error?S.error:(S.dirty?t('pend'):''))+'</p></div>';
+}
+
+function more(){return'<h2>☰ '+t('more')+'</h2><div class="mg">'+
+  '<button class="btn alt" onclick="go(\'rep\')">📊<br>'+t('rep')+'</button>'+
+  '<button class="btn alt" onclick="go(\'team\')">📞<br>'+t('team')+'</button>'+
+  '</div>'}
+
+function row(x,s){return'<div class="card"><div class="top" style="margin:0"><div><span class="dot" style="background:var(--'+x.c+')"></span><b>'+esc(x.name)+'</b><div class="mu">W'+x.w+' · '+s+'</div></div><div style="white-space:nowrap">'+ct(x)+'</div></div></div>'}
+function rep(){
+  RT=[S.p.gp+' – '+t('rep')];
+  var h='<button class="x" style="color:var(--ink);font-size:18px" onclick="go(\'more\')">← '+t('more')+'</button><h2>📊 '+t('rep')+'</h2>'+
+    '<div class="chips">'+[['fu','fu'],['wd','wards'],['pl','poll'],['mn','money']].map(function(x){return'<button class="chip '+(RF===x[0]?'on':'')+'" onclick="RF=\''+x[0]+'\';render()">'+t(x[1])+'</button>'}).join('')+'</div>',L;
+  if(RF==='fu'||RF==='pl'){
+    L=RF==='fu'?S.hh.filter(function(x){return x.c!=='D'&&x.v<3}).sort(function(a,b){return a.v-b.v}):S.hh.filter(function(x){return(x.c==='A'||x.c==='B')&&!x.voted});
+    h+='<div class="card"><b style="font-size:28px">'+L.length+'</b> '+(RF==='fu'?t('needv'):t('todo'))+'</div>';
+    L.forEach(function(x){RT.push(x.name+' · W'+x.w+' · '+x.c);h+=row(x,RF==='fu'?x.v+'/3':'')});
+  }
+  if(RF==='wd'){
+    var tg=Math.ceil(need()/S.p.wd);
+    for(var w=1;w<=S.p.wd;w++){
+      var A=sumV('A',w),gp=A-tg;
+      h+='<div class="card"><div class="top" style="margin:0"><b>W'+w+'</b><b style="color:var(--'+(gp>=0?'A':'D')+')">'+t('gap')+' '+(gp>0?'+':'')+gp+'</b></div><div class="row" style="text-align:center"><b style="color:var(--A)">A '+A+'</b><b style="color:var(--B)">B '+sumV('B',w)+'</b><b style="color:var(--C)">C '+sumV('C',w)+'</b><b style="color:var(--D)">D '+sumV('D',w)+'</b></div></div>';
+    }
+  }
+  if(RF==='mn'){
+    var sp=S.exp.reduce(function(a,x){return a+x.a},0);
+    h+='<div class="card"><div class="big">₹'+sp+'</div><div class="mu">'+(S.limit?t('left')+' ₹'+(S.limit-sp):'')+'</div></div>';
+  }
+  return h+'<button class="btn" style="margin-top:12px" onclick="window.open(\'https://wa.me/?text=\'+encodeURIComponent(RT.join(\'\\n\')))">💬 '+t('sendrep')+'</button>';
+}
+
+function render(){
+  var a=document.getElementById('app'),nv=document.getElementById('nav');
+  document.documentElement.lang=S.lang;
+  if(S.loading){
+    a.innerHTML='<div style="text-align:center;padding:60px 20px"><h1>🗳 '+t('app')+'</h1><p class="mu" style="margin-top:20px">'+t('loading')+'</p></div>';
+    nv.style.display='none';return;
+  }
+  if(!S.p||view==='setup'){
+    nv.style.display='none';
+    a.innerHTML=setup()+(S.error?'<div class="card" style="background:#ffdddd;margin-top:12px">'+S.error+'</div>':'');
+    return;
+  }
+  nv.style.display='flex';
+  var V={home:home,hh:homes,poll:pollv,money:moneyv,rep:rep,more:more,team:teamv};
+  var I={home:'🏠',hh:'👥',poll:'🗳',money:'₹',rep:'📊',more:'☰'};
+  var sub={team:1};
+  a.innerHTML=(sub[view]?'<button class="x" style="color:var(--ink);font-size:18px" onclick="go(\'more\')">← '+t('more')+'</button>':'')+(V[view]?V[view]():'<p>'+t('none')+'</p>');
+  nv.innerHTML=Object.keys(I).map(function(k){return'<button class="tab '+(k===view||(k==='more'&&sub[view])?'on':'')+'" onclick="go(\''+k+'\')"><b>'+I[k]+'</b>'+t(k)+'</button>'}).join('');
+  hb();
+}
+function hb(){var b=document.getElementById('hb');b.className=S.help?'on':'';b.style.display=(!S.p||view==='setup')?'none':'block'}
+function helpT(){S.help=!S.help;save();hb()}
+
+load();
+if(S.url&&S.key)fetchData();
+else render();
+window.addEventListener('online',function(){if(S.dirty)push()});
+setInterval(function(){if(S.dirty&&S.url&&S.key&&navigator.onLine!==false)push()},60000);
+</script></body></html>
